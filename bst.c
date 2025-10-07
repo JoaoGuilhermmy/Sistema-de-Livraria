@@ -20,9 +20,9 @@ CategoryNode *insert_category_node(CategoryNode *root, int id, char category_nam
 {
     if (root == NULL)
         return new_node(id, category_name, books_file);
-    if (id < root->id)
+    if (strcmp(category_name, root->category_name) < 0)
         root->left = insert_category_node(root->left, id, category_name, books_file);
-    else if (id > root->id)
+    else if (strcmp(category_name, root->category_name) > 0)
         root->right = insert_category_node(root->right, id, category_name, books_file);
     return root;
 }
