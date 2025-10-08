@@ -10,5 +10,9 @@ typedef struct Maxheap
 } Maxheap;
 
 Maxheap *create_maxheap(int capacity);
+void insert_heap(Maxheap *heap, Book book);
+void print_heap(Maxheap *heap);
+void consult_top_one(Maxheap *heap);
+void heapify_down(Maxheap *heap, int index);
 
 #endif

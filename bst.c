@@ -1,6 +1,7 @@
 #include "bst.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 CategoryNode *new_node(int id, char category_name[], char books_file[])
 {
