@@ -5,4 +5,5 @@
 CategoryNode *new_node(int id, char category_name[], char books_file[]);
 CategoryNode *insert_category_node(CategoryNode *root, int id, char category_name[], char books_file[]);
 CategoryNode *in_ordem_traversal(CategoryNode *root);
+CategoryNode *search_category(CategoryNode *root, char category_name[]);
 #endif

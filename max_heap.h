@@ -14,5 +14,7 @@ void insert_heap(Maxheap *heap, Book book);
 void print_heap(Maxheap *heap);
 void consult_top_one(Maxheap *heap);
 void heapify_down(Maxheap *heap, int index);
+void list_top_n(Maxheap *heap, int n);
+void register_sale(Maxheap *heap, int isbn, int quantity);
 
 #endif

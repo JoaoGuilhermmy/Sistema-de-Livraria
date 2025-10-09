@@ -38,3 +38,26 @@ CategoryNode *in_ordem_traversal(CategoryNode *root)
     in_ordem_traversal(root->right);
     return root;
 }
+
+CategoryNode *search_category(CategoryNode *root, char category_name[])
+{
+    while (root != NULL)
+    {
+        if (strcmp(root->category_name, category_name) == 0)
+            return root;
+        if (strcmp(category_name, category_name) < 0)
+            root = root->left;
+        else
+            root = root->right;
+    }
+    return NULL;
+}
+
+void free_tree(CategoryNode *root)
+{
+    if (root == NULL)
+        return;
+    free_tree(root->left);
+    free_tree(root->right);
+    free(root);
+}
