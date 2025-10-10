@@ -7,7 +7,7 @@
 int main()
 {
     CategoryNode *root = NULL;
-    Maxheap *heap = NULL;
+    MaxHeap *heap = NULL;
     int choice;
 
     while (1)
@@ -17,7 +17,7 @@ int main()
         printf("2. Listar categorias\n");
         printf("3. Selecionar categoria\n");
         printf("4. Mostrar top 1 livros mais vendido\n");
-        printf("5. Listar top N livros masi vendidos\n");
+        printf("5. Listar top N livros mais vendidos\n");
         printf("6. Registrar venda\n");
         printf("0. Sair\n");
         printf("Digite sua escolha: ");
@@ -33,21 +33,25 @@ int main()
         switch (choice)
         {
         case 1:
-            root = load_categories_file("categories.csv");
+            root = load_categories_file("categorias.csv");
             break;
         case 2:
             printf("Categorias:\n");
             in_ordem_traversal(root);
             break;
         case 3:
+        {
+
             char category_name[100];
-            CategoryNode *category = search_category(root, category_name);
+            free_heap(heap);
+            heap = NULL;
+            printf("Categorias:\n");
+            in_ordem_traversal(root);
+
             printf("Digite a categoria desejada: ");
             scanf("%s", category_name);
-            if (category != NULL)
-            {
-                free_heap(heap);
-            }
+            CategoryNode *category = search_category(root, category_name);
+
             if (category != NULL)
             {
                 heap = load_books_file(category->books_file);
@@ -57,7 +61,8 @@ int main()
             {
                 printf("Categoria nao encontrada\n");
             }
-            break;
+        }
+        break;
         case 4:
             if (heap != NULL)
             {

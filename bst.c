@@ -29,14 +29,13 @@ CategoryNode *insert_category_node(CategoryNode *root, int id, char category_nam
     return root;
 }
 
-CategoryNode *in_ordem_traversal(CategoryNode *root)
+void in_ordem_traversal(CategoryNode *root)
 {
     if (root == NULL)
-        return NULL;
+        return;
     in_ordem_traversal(root->left);
     printf(" - %s\n", root->category_name);
     in_ordem_traversal(root->right);
-    return root;
 }
 
 CategoryNode *search_category(CategoryNode *root, char category_name[])
@@ -45,7 +44,7 @@ CategoryNode *search_category(CategoryNode *root, char category_name[])
     {
         if (strcmp(root->category_name, category_name) == 0)
             return root;
-        if (strcmp(category_name, category_name) < 0)
+        if (strcmp(category_name, root->category_name) < 0)
             root = root->left;
         else
             root = root->right;

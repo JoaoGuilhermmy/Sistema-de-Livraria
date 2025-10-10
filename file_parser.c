@@ -20,6 +20,7 @@ CategoryNode *load_categories_file(const char *filename)
     CategoryNode *tree_root = NULL;
 
     char line_buffer[256];
+    fgets(line_buffer, sizeof(line_buffer), file);
 
     while (fgets(line_buffer, sizeof(line_buffer), file))
     {
@@ -43,7 +44,7 @@ CategoryNode *load_categories_file(const char *filename)
     return tree_root;
 }
 
-Maxheap *load_books_file(const char *filename)
+MaxHeap *load_books_file(const char *filename)
 {
     FILE *file = fopen(filename, "r");
 
@@ -53,16 +54,18 @@ Maxheap *load_books_file(const char *filename)
         return NULL;
     }
 
-    char line_buffer[269];
+    char line_buffer[256];
+
     int row_count = 0;
-    while (fgets(line_buffer, sizeof(line_buffer), file))
+    while ((fgets(line_buffer, sizeof(line_buffer), file)))
     {
         row_count++;
     }
     rewind(file);
 
-    int capacity = row_count;
-    Maxheap *heap = create_maxheap(capacity);
+    fgets(line_buffer, sizeof(line_buffer), file);
+    int capacity = row_count - 1;
+    MaxHeap *heap = create_heap(capacity);
 
     while (fgets(line_buffer, sizeof(line_buffer), file))
     {
@@ -90,6 +93,7 @@ Maxheap *load_books_file(const char *filename)
 
         insert_heap(heap, book);
     }
+    fclose(file);
 
     return heap;
 }

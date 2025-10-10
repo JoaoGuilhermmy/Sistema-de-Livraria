@@ -2,19 +2,20 @@
 #define MAX_HEAP_H
 #include "models.h"
 
-typedef struct Maxheap
+typedef struct MaxHeap
 {
     Book *books;
     int size;
     int capacity;
-} Maxheap;
+} MaxHeap;
 
-Maxheap *create_maxheap(int capacity);
-void insert_heap(Maxheap *heap, Book book);
-void print_heap(Maxheap *heap);
-void consult_top_one(Maxheap *heap);
-void heapify_down(Maxheap *heap, int index);
-void list_top_n(Maxheap *heap, int n);
-void register_sale(Maxheap *heap, int isbn, int quantity);
+MaxHeap *create_heap(int capacity);
+void insert_heap(MaxHeap *heap, Book book);
+void print_heap(MaxHeap *heap);
+void consult_top_one(MaxHeap *heap);
+void heapify_down(MaxHeap *heap, int index);
+void list_top_n(MaxHeap *heap, int n);
+void register_sale(MaxHeap *heap, int isbn, int quantity);
+void free_heap(MaxHeap *heap);
 
 #endif

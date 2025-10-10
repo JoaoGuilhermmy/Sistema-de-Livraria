@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-Maxheap *create_maxheap(int capacity)
+MaxHeap *create_heap(int capacity)
 {
-    Maxheap *heap = (Maxheap *)malloc(sizeof(Maxheap));
+    MaxHeap *heap = (MaxHeap *)malloc(sizeof(MaxHeap));
     heap->books = (Book *)malloc(sizeof(Book) * capacity);
     heap->capacity = capacity;
     heap->size = 0;
@@ -12,7 +12,7 @@ Maxheap *create_maxheap(int capacity)
     return heap;
 }
 
-void insert_heap(Maxheap *heap, Book book)
+void insert_heap(MaxHeap *heap, Book book)
 {
     if (heap->size == heap->capacity)
     {
@@ -33,12 +33,12 @@ void insert_heap(Maxheap *heap, Book book)
     }
 }
 
-void print_heap(Maxheap *heap)
+void print_heap(MaxHeap *heap)
 {
     printf("-------------------------------\n");
     for (int i = 0; i < heap->size; i++)
     {
-        printf("ISBN: %d, Title: %s, Author: %s, Year: %d, Price: %.2f, Stock: %d, Sales: %d\n",
+        printf("ISBN: %d, Titulo: %s, Autor: %s, Ano: %d, Preco: %.2f, Estoque: %d, Vendas: %d\n",
                heap->books[i].isbn,
                heap->books[i].title,
                heap->books[i].author,
@@ -50,7 +50,7 @@ void print_heap(Maxheap *heap)
     }
 }
 
-void consult_top_one(Maxheap *heap)
+void consult_top_one(MaxHeap *heap)
 {
     if (heap->size == 0)
     {
@@ -58,11 +58,11 @@ void consult_top_one(Maxheap *heap)
         return;
     }
 
-    printf("Top 1 Book:\n");
-    printf("Nome: %s\n , Autor: %s\n , Vendas: %d\n", heap->books[0].title, heap->books[0].author, heap->books[0].sales);
+    printf("Livro top 1:\n");
+    printf("Nome: %s , Autor: %s , Vendas: %d", heap->books[0].title, heap->books[0].author, heap->books[0].sales);
 }
 
-void heapify_down(Maxheap *heap, int index)
+void heapify_down(MaxHeap *heap, int index)
 {
     int largest = index;
     int son_left = 2 * index + 1;
@@ -87,24 +87,24 @@ void heapify_down(Maxheap *heap, int index)
     }
 }
 
-void list_top_n(Maxheap *heap, int n)
+void list_top_n(MaxHeap *heap, int n)
 {
     if (n > heap->size)
     {
-        printf("Você solicitou livro mais do que existe no heap", n);
+        printf("Você solicitou %d livros, mas só existem %d. Mostrando todos.\n", n, heap->size);
         n = heap->size;
     }
 
-    Maxheap *temp_heap = create_maxheap(heap->capacity);
+    MaxHeap *temp_heap = create_heap(heap->capacity);
     for (int i = 0; i < heap->size; i++)
     {
         temp_heap->books[i] = heap->books[i];
     }
     temp_heap->size = heap->size;
 
-    for (i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        printf("Top %d Book: %s, Author: %s, Year: %d, Price: %.2f, Stock: %d, Sales: %d\n", (i + 1), temp_heap->books[0].title, temp_heap->books[0].author, temp_heap->books[0].year, temp_heap->books[0].price, temp_heap->books[0].stock, temp_heap->books[0].sales);
+        printf("Top %d Livro: %s, Autor: %s, Ano: %d, Preco: %.2f, Estoque: %d, Vendas: %d\n", (i + 1), temp_heap->books[0].title, temp_heap->books[0].author, temp_heap->books[0].year, temp_heap->books[0].price, temp_heap->books[0].stock, temp_heap->books[0].sales);
 
         Book temp = temp_heap->books[0];
         temp_heap->books[0] = temp_heap->books[temp_heap->size - 1];
@@ -112,16 +112,19 @@ void list_top_n(Maxheap *heap, int n)
         temp_heap->size--;
         heapify_down(temp_heap, 0);
     }
+    free_heap(temp_heap);
 }
 
-void register_sale(Maxheap *heap, int isbn, int quantity)
+void register_sale(MaxHeap *heap, int isbn, int quantity)
 {
-    for (int i = o; i < heap->size; i++)
+    for (int i = 0; i < heap->size; i++)
     {
         if (heap->books[i].isbn == isbn)
         {
             heap->books[i].sales += quantity;
             heap->books[i].stock -= quantity;
+
+            int current_index = i;
 
             while (current_index > 0 && heap->books[current_index].sales > heap->books[(current_index - 1) / 2].sales)
             {
@@ -130,11 +133,12 @@ void register_sale(Maxheap *heap, int isbn, int quantity)
                 heap->books[(current_index - 1) / 2] = temp;
                 current_index = (current_index - 1) / 2;
             }
+            break;
         }
     }
 }
 
-void free_heap(Maxheap *heap)
+void free_heap(MaxHeap *heap)
 {
     if (heap == NULL)
         return;
