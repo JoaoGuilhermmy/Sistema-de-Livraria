@@ -117,6 +117,7 @@ void list_top_n(MaxHeap *heap, int n)
 
 void register_sale(MaxHeap *heap, int isbn, int quantity)
 {
+    int found = 0;
     for (int i = 0; i < heap->size; i++)
     {
         if (heap->books[i].isbn == isbn)
@@ -133,8 +134,13 @@ void register_sale(MaxHeap *heap, int isbn, int quantity)
                 heap->books[(current_index - 1) / 2] = temp;
                 current_index = (current_index - 1) / 2;
             }
+            found = 1;
             break;
         }
+    }
+    if (found == 0)
+    {
+        printf("Livro com ISBN %d nao encontrado no heap.\n", isbn);
     }
 }
 
